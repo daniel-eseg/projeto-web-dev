@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Produção')}"></head>
+<body>
+	<nav th:replace="~{fragments/layout :: navbar('producoes')}"></nav>
+
+	<main>
+		<div class="container">
+			<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+				<h1 class="h3 mb-0">Produção</h1>
+				<a th:href="@{/producoes/novo}" class="btn btn-od">+ Registrar produção</a>
+			</div>
+
+			<div th:replace="~{fragments/layout :: mensagens}"></div>
+
+			<div th:if="${#lists.isEmpty(producoes)}" class="od-card">Nenhuma produção registrada.</div>
+
+			<div th:unless="${#lists.isEmpty(producoes)}" class="table-responsive">
+				<table class="od-tabela">
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Data</th>
+							<th>Poço</th>
+							<th>Óleo (bbl)</th>
+							<th>Gás (m³)</th>
+							<th>Eficiência</th>
+							<th>Custo (R$)</th>
+							<th>Destino</th>
+							<th class="text-end">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${producoes}">
+							<td th:text="${p.codigo}">PR000001</td>
+							<td th:text="${#temporals.format(p.dataProducao, 'dd/MM/yyyy')}">01/01/2025</td>
+							<td th:text="${p.poco.codigo}">PO00001</td>
+							<td th:text="${#numbers.formatDecimal(p.volumeOleoBarris, 1, 'POINT', 1, 'COMMA')}">1.000,0</td>
+							<td th:text="${#numbers.formatDecimal(p.volumeGasMetrosCubicos, 1, 'POINT', 1, 'COMMA')}">500,0</td>
+							<td th:text="${#numbers.formatDecimal(p.eficienciaPercentual, 1, 'POINT', 1, 'COMMA')} + '%'">90,0%</td>
+							<td th:text="${#numbers.formatDecimal(p.custoOperacional, 1, 'POINT', 2, 'COMMA')}">10.000,00</td>
+							<td th:text="${p.refinariaDestino != null} ? ${p.refinariaDestino.codigo} : '—'">RF001</td>
+							<td class="text-end text-nowrap">
+								<a th:href="@{/producoes/{id}/editar(id=${p.id})}" class="btn btn-sm btn-od-outline">Editar</a>
+								<form th:action="@{/producoes/{id}/excluir(id=${p.id})}" method="post" class="d-inline"
+									onsubmit="return confirm('Excluir esta produção?');">
+									<button type="submit" class="btn btn-sm btn-od-perigo">Excluir</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

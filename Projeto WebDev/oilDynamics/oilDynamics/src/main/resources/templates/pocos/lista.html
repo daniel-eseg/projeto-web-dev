@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Poços')}"></head>
+<body>
+	<nav th:replace="~{fragments/layout :: navbar('pocos')}"></nav>
+
+	<main>
+		<div class="container">
+			<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+				<h1 class="h3 mb-0">Poços</h1>
+				<a th:href="@{/pocos/novo}" class="btn btn-od">+ Novo poço</a>
+			</div>
+
+			<div th:replace="~{fragments/layout :: mensagens}"></div>
+
+			<!-- Filtro por status (GET /pocos?status=...) -->
+			<form th:action="@{/pocos}" method="get" class="od-card">
+				<div class="row g-3 align-items-end">
+					<div class="col-12 col-md-4">
+						<label for="status" class="form-label">Status</label>
+						<select id="status" name="status" class="form-select">
+							<option value="">Todos</option>
+							<option th:each="s : ${statusOpcoes}" th:value="${s}" th:text="${s.descricao}"
+								th:selected="${s == statusFiltro}">Ativo</option>
+						</select>
+					</div>
+					<div class="col-12 col-md-4 d-flex gap-2">
+						<button type="submit" class="btn btn-od">Filtrar</button>
+						<a th:href="@{/pocos}" class="btn btn-od-outline">Limpar</a>
+					</div>
+				</div>
+			</form>
+
+			<div th:if="${#lists.isEmpty(pocos)}" class="od-card">Nenhum poço encontrado.</div>
+
+			<div th:unless="${#lists.isEmpty(pocos)}" class="table-responsive">
+				<table class="od-tabela">
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Campo</th>
+							<th>Tipo</th>
+							<th>Vazão (bbl/dia)</th>
+							<th>Início</th>
+							<th>Status</th>
+							<th class="text-end">Ações</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="p : ${pocos}">
+							<td th:text="${p.codigo}">PO00001</td>
+							<td th:text="${p.campo.codigo}">CP0001</td>
+							<td th:text="${p.tipoPoco}">Produtor</td>
+							<td th:text="${#numbers.formatDecimal(p.vazaoBarrisPorDia, 1, 'POINT', 1, 'COMMA')}">1.250,0</td>
+							<td th:text="${#temporals.format(p.dataInicio, 'dd/MM/yyyy')}">12/03/2019</td>
+							<td>
+								<span class="od-status" th:classappend="'od-status-' + ${#strings.toLowerCase(p.statusPoco.name())}"
+									th:text="${p.statusPoco.descricao}">Ativo</span>
+							</td>
+							<td class="text-end text-nowrap">
+								<a th:href="@{/pocos/{id}/editar(id=${p.id})}" class="btn btn-sm btn-od-outline">Editar</a>
+								<form th:action="@{/pocos/{id}/excluir(id=${p.id})}" method="post" class="d-inline"
+									onsubmit="return confirm('Excluir este poço e todas as suas produções?');">
+									<button type="submit" class="btn btn-sm btn-od-perigo">Excluir</button>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</main>
+
+	<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

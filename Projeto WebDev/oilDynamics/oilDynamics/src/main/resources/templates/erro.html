@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Erro')}"></head>
+<body>
+	<nav th:replace="~{fragments/layout :: navbar('')}"></nav>
+
+	<main>
+		<div class="container">
+			<div class="od-card">
+				<h1 class="h4">Não foi possível concluir</h1>
+				<p th:text="${mensagem}">Registro não encontrado.</p>
+				<a th:href="@{/}" class="btn btn-od">Voltar ao início</a>
+			</div>
+		</div>
+	</main>
+
+	<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>

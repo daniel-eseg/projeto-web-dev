@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Campo')}"></head>
+<body>
+	<nav th:replace="~{fragments/layout :: navbar('campos')}"></nav>
+
+	<main>
+		<div class="container">
+			<h1 class="h3 mb-3" th:text="${campo.id == null} ? 'Novo campo' : 'Editar campo ' + ${campo.codigo}">Campo</h1>
+
+			<!-- th:object liga o formulário ao objeto "campo" do Model; *{atributo} = campo.atributo -->
+			<form th:action="@{/campos/salvar}" th:object="${campo}" method="post" class="od-card" novalidate>
+				<input type="hidden" th:field="*{id}">
+
+				<div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+					<div th:each="e : ${#fields.globalErrors()}" th:text="${e}"></div>
+				</div>
+
+				<div class="row g-3">
+					<div class="col-12 col-md-4">
+						<label for="codigo" class="form-label">Código</label>
+						<input type="text" th:field="*{codigo}" class="form-control" th:errorclass="is-invalid" placeholder="Ex.: CP0001">
+						<div class="od-erro-campo" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></div>
+					</div>
+					<div class="col-12 col-md-8">
+						<label for="nomeBacia" class="form-label">Bacia</label>
+						<input type="text" th:field="*{nomeBacia}" class="form-control" th:errorclass="is-invalid">
+						<div class="od-erro-campo" th:if="${#fields.hasErrors('nomeBacia')}" th:errors="*{nomeBacia}"></div>
+					</div>
+					<div class="col-4 col-md-2">
+						<label for="estado" class="form-label">UF</label>
+						<input type="text" th:field="*{estado}" class="form-control" th:errorclass="is-invalid" maxlength="2" placeholder="RJ">
+						<div class="od-erro-campo" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></div>
+					</div>
+					<div class="col-8 col-md-5">
+						<label for="ambiente" class="form-label">Ambiente</label>
+						<input type="text" th:field="*{ambiente}" class="form-control" th:errorclass="is-invalid" placeholder="Ex.: Offshore">
+						<div class="od-erro-campo" th:if="${#fields.hasErrors('ambiente')}" th:errors="*{ambiente}"></div>
+					</div>
+					<div class="col-12 col-md-5">
+						<label for="status" class="form-label">Status</label>
+						<input type="text" th:field="*{status}" class="form-control" th:errorclass="is-invalid" placeholder="Ex.: Produção">
+						<div class="od-erro-campo" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+					</div>
+				</div>
+
+				<div class="d-flex gap-2 mt-4">
+					<button type="submit" class="btn btn-od">Salvar</button>
+					<a th:href="@{/campos}" class="btn btn-od-outline">Cancelar</a>
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<footer th:replace="~{fragments/layout :: rodape}"></footer>
+</body>
+</html>
