@@ -1,0 +1,227 @@
+/* ==========================================================================
+   oilDynamics - estilo base (complementa o Bootstrap 5)
+   Paleta escolhida no Color Hunt: #F9E6A8 · #F2A900 · #CC6F00 · #4D2A00
+   ========================================================================== */
+
+:root {
+	--od-bege: #F9E6A8;      /* fundos de destaque, cabeçalho de tabela */
+	--od-amarelo: #F2A900;   /* ação principal, foco */
+	--od-laranja: #CC6F00;   /* hover, ação secundária */
+	--od-marrom: #4D2A00;    /* texto, navbar, rodapé */
+
+	--od-fundo: #FFFBF0;     /* fundo da página (bege bem claro) */
+	--od-borda: #E8D49A;
+	--od-erro: #B3261E;
+}
+
+/* ---------- Base ---------- */
+
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	background-color: var(--od-fundo);
+	color: var(--od-marrom);
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+	flex: 1;              /* empurra o rodapé para o fim da página */
+	padding: 2rem 0;
+}
+
+h1, h2, h3 {
+	color: var(--od-marrom);
+	font-weight: 700;
+}
+
+a {
+	color: var(--od-laranja);
+}
+
+a:hover {
+	color: var(--od-marrom);
+}
+
+/* ---------- Barra de navegação ---------- */
+
+.od-navbar {
+	background-color: var(--od-marrom);
+	border-bottom: 4px solid var(--od-amarelo);
+}
+
+.od-navbar .navbar-brand {
+	color: var(--od-amarelo);
+	font-weight: 700;
+	letter-spacing: 0.5px;
+}
+
+.od-navbar .nav-link {
+	color: var(--od-bege);
+}
+
+.od-navbar .nav-link:hover,
+.od-navbar .nav-link.active {
+	color: var(--od-amarelo);
+}
+
+/* ---------- Cartão (caixa de conteúdo) ---------- */
+
+.od-card {
+	background-color: #fff;
+	border: 1px solid var(--od-borda);
+	border-radius: 10px;
+	padding: 1.5rem;
+	box-shadow: 0 2px 6px rgba(77, 42, 0, 0.08);
+	margin-bottom: 1.5rem;
+}
+
+/* ---------- Botões ---------- */
+
+.btn-od {
+	background-color: var(--od-amarelo);
+	border: 1px solid var(--od-amarelo);
+	color: var(--od-marrom);
+	font-weight: 600;
+}
+
+.btn-od:hover,
+.btn-od:focus {
+	background-color: var(--od-laranja);
+	border-color: var(--od-laranja);
+	color: #fff;
+}
+
+.btn-od-outline {
+	background-color: transparent;
+	border: 1px solid var(--od-marrom);
+	color: var(--od-marrom);
+	font-weight: 600;
+}
+
+.btn-od-outline:hover,
+.btn-od-outline:focus {
+	background-color: var(--od-marrom);
+	color: var(--od-bege);
+}
+
+.btn-od-perigo {
+	background-color: var(--od-erro);
+	border: 1px solid var(--od-erro);
+	color: #fff;
+	font-weight: 600;
+}
+
+.btn-od-perigo:hover {
+	background-color: #8C1D18;
+	color: #fff;
+}
+
+/* ---------- Campos de formulário ---------- */
+
+.form-label {
+	font-weight: 600;
+	color: var(--od-marrom);
+}
+
+.form-control,
+.form-select {
+	border: 1px solid var(--od-borda);
+	color: var(--od-marrom);
+}
+
+.form-control:focus,
+.form-select:focus {
+	border-color: var(--od-amarelo);
+	box-shadow: 0 0 0 0.2rem rgba(242, 169, 0, 0.35);
+}
+
+/* Mensagem de erro de validação junto ao campo (RNF-03) */
+.od-erro-campo {
+	color: var(--od-erro);
+	font-size: 0.875rem;
+	margin-top: 0.25rem;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+	border-color: var(--od-erro);
+}
+
+/* ---------- Tabelas ---------- */
+
+.od-tabela {
+	width: 100%;
+	margin-bottom: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid var(--od-borda);
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.od-tabela thead th {
+	background-color: var(--od-bege);
+	color: var(--od-marrom);
+	font-weight: 700;
+	border-bottom: 2px solid var(--od-amarelo);
+	padding: 0.75rem;
+	white-space: nowrap;
+}
+
+.od-tabela td {
+	padding: 0.65rem 0.75rem;
+	border-top: 1px solid var(--od-borda);
+	vertical-align: middle;
+}
+
+.od-tabela tbody tr:nth-child(even) {
+	background-color: #FFF8E3;
+}
+
+.od-tabela tbody tr:hover {
+	background-color: rgba(242, 169, 0, 0.15);
+}
+
+/* ---------- Etiquetas de status ---------- */
+
+.od-status {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	font-weight: 700;
+}
+
+.od-status-ativo {
+	background-color: var(--od-amarelo);
+	color: var(--od-marrom);
+}
+
+.od-status-manutencao {
+	background-color: var(--od-laranja);
+	color: #fff;
+}
+
+.od-status-parado {
+	background-color: var(--od-marrom);
+	color: var(--od-bege);
+}
+
+/* ---------- Rodapé ---------- */
+
+.od-rodape {
+	background-color: var(--od-marrom);
+	color: var(--od-bege);
+	border-top: 4px solid var(--od-amarelo);
+	padding: 1rem 0;
+	font-size: 0.9rem;
+}
+
+.od-rodape a {
+	color: var(--od-amarelo);
+}
